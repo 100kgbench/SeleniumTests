@@ -3,12 +3,13 @@ using NUnit.Framework;
 using NUnit.Framework.Legacy;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace LearningSelenium
 {
     public class Tests
     {
-        [Test]
+        /*[Test]
         public void TestMagistratToSearchToHome()
         {
             IWebDriver driver = new ChromeDriver();
@@ -58,6 +59,39 @@ namespace LearningSelenium
             Assert.That(driver.Url, Is.EqualTo("https://www.prerov.eu/"));
 
             driver.Quit();
+        }*/
+        [Test]
+        public void TestRegistration()
+        {
+            
+            var driver = new ChromeDriver();
+            driver.Url = "https://www.kosik.cz";
+            driver.Manage().Window.Maximize();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            
+            driver.FindElement(By.CssSelector(".cookie-bar_accept-button")).Click();
+            driver.FindElement(By.XPath("//button[contains(text(), 'Registrovat')]")).Click();
+            driver.FindElement(By.Id("SignUpWithLogonEmail_EmailVerificationExchange")).Click();
+            var emailRegistration = driver.FindElement(By.Id("email"));
+            emailRegistration.Click();
+            emailRegistration.SendKeys("test_selenium@seznam.cz");
+            Console.WriteLine("Enter Code");
+            var code = Console.ReadLine();
+            var codeRegistration = driver.FindElement(By.Id("verificationCode"));
+            codeRegistration.Click();
+            codeRegistration.SendKeys(code);
+
+
+
+
+
+
+
+
+
+
+            driver.Quit();
+
         }
     }
 }
